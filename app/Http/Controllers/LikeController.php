@@ -9,13 +9,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LikeController extends Controller
 {
+
+
+
+    public function __construct()
+    {
+        $this->middleware('JWT');
+    }
+
     public function likeIt(Reply $reply)
     {
        $x= $reply->like();
             $x->create([
 
             'user_id'=>'1',
-                'reply_id'=>'1'
+
 
         ]);
         return response('created',Response::HTTP_CREATED);
