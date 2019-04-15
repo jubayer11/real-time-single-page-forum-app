@@ -24,6 +24,8 @@ login(data){
 
 
         AppStorage.store(username,access_token)
+
+        window.location = '/forum'
     }
  }
  hasToken(){
@@ -43,6 +45,8 @@ login(data){
 
  logout(){
     AppStorage.clear()
+
+     window.location='/forum'
  }
 name(){
     if(this.loggedIn()){
