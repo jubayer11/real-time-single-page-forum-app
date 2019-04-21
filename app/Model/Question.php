@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    //
-//    protected $fillable=
-//        [
-//            'title','slug','body','category_id','user_id'
-//        ];
 
-protected $guarded=[];
+    protected $fillable=
+        [
+            'title','slug','body','category_id','user_id'
+        ];
+
+//protected $guarded=[];
 
     public function getRouteKeyName()
     {
@@ -36,6 +36,13 @@ protected $guarded=[];
 
     {
         return "/question/$this->slug";
+    }
+    protected static function boot()
+    {
+        parent::boot();
+        static ::creating(function ($question){
+            $question->slug = str_slug($question->title);
+        });
     }
 
 

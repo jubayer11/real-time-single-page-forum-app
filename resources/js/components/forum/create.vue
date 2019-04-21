@@ -21,6 +21,7 @@
                     autocomplete
 
             ></v-select>
+            <markdown-editor v-model="form.body"></markdown-editor>
 
 
 
@@ -50,8 +51,11 @@
               form:{
                   title:null,
                   category_id:null,
+                  body:null
               },
-              categories:{}
+              categories:{},
+              errors:{}
+
           }
 
 
@@ -64,6 +68,9 @@
 
         methods:{
             create(){
+                axios.post('/api/question',this.form)
+                    .then(res =>this.$router.push(res.data.path))
+                    .catch(error =>this.error = error.response.data.error)
 
             }
         }

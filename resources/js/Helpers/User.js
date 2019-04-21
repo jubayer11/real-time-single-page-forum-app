@@ -60,6 +60,9 @@ id(){
         return payload.sub
     }
 }
+own(id){
+    return this.id() ==id
+}
 
 
 }
