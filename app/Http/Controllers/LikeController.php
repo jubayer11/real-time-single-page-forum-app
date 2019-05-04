@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\LikeEvent;
 use App\Model\Reply;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,20 +20,18 @@ class LikeController extends Controller
 
     public function likeIt(Reply $reply)
     {
-       $x= $reply->like();
-            $x->create([
-
-            'user_id'=>auth()->id()
-
-
+        $reply->like()->create([
+            'user_id' => auth()->id()
         ]);
-        return response('created',Response::HTTP_CREATED);
+
+        broadcast(new LikeEvent($reply->id, 1))->toOthers();
 
 
     }
     public function unLikeIt(Reply $reply)
     {
        $reply->like()->where('user_id',auth()->id())->first()->delete();
+        broadcast(new LikeEvent($reply->id, 0))->toOthers();
         //$reply->like()->where('user_id','1')->first()->delete();
 
     }
